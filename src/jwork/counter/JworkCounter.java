@@ -16,11 +16,7 @@ public class JworkCounter {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-    Pointer p =    new Pointer();
-    p.newMounth();
-        System.out.println( p.getPointer());
-    
-
+  IO a= new IO();
         // TODO code application logic here
     }
 }

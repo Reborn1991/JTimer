@@ -11,7 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,27 +19,39 @@ import java.util.logging.Logger;
  * @author Honza
  */
 public class IO {
+    Pointer pointer;
     Mounth Actual;
-
-    public IO(Integer seznamFile) throws IOException, ClassNotFoundException {
+  private  String pointerName = "point";
+    
+    public IO() throws IOException, ClassNotFoundException {
   ObjectInputStream vstup = null;
+  try{vstup= new ObjectInputStream(new BufferedInputStream(new FileInputStream(pointerName)));}
+  finally{
+      if(vstup==null){ pointer= new Pointer();vstup.close();   }
   
-  try{
-            try {
-                vstup= new ObjectInputStream(new BufferedInputStream(new FileInputStream(seznamFile.toString())));
+  pointer=(Pointer) vstup.readObject();
+  
+  }
+      Integer path=pointer.getPointer();    
+  try {
+                
+                vstup= new ObjectInputStream(new BufferedInputStream(new FileInputStream(path.toString())));
             } catch (IOException ex) {
                 Logger.getLogger(IO.class.getName()).log(Level.SEVERE, null, ex);
             }
-}
         finally{
-        if(vstup==null){Actual= new Mounth(seznamFile, 88);return;}
+        if(vstup==null){Actual= new Mounth(path, 88);return;}
         Actual=(Mounth) vstup.readObject();
         vstup.close();}
     }
     
  public void  zapsat() throws IOException{
-     Integer cesta=Actual.Kolikátý;
- ObjectOutputStream vystup=new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(cesta.toString())));
+     Integer path=pointer.getPointer();
+     ObjectOutputStream vystup=new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(pointerName)));
+vystup.writeObject(pointer);
+vystup.close();
+
+vystup=new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(path.toString())));
 vystup.writeObject(Actual);
 vystup.close();}
  
