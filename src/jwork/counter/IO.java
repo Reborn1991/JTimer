@@ -21,28 +21,34 @@ import java.util.logging.Logger;
 public class IO {
     Pointer pointer;
     Mounth Actual;
-  private  String pointerName = "point";
+ static private  String pointerName = "point";
     
     public IO() throws IOException, ClassNotFoundException {
   ObjectInputStream vstup = null;
-  try{vstup= new ObjectInputStream(new BufferedInputStream(new FileInputStream(pointerName)));}
+   ObjectInputStream vstup1 = null;
+   
+  
+  try{
+      vstup= new ObjectInputStream(new BufferedInputStream(new FileInputStream(pointerName)));
+  pointer=(Pointer)vstup.readObject();
+  vstup.close(); }
+  
   finally{
-      if(vstup==null){ pointer= new Pointer();vstup.close();   }
+     if(pointer==null){ pointer= new Pointer();   }
+ 
   
-  pointer=(Pointer) vstup.readObject();
-  
-  }
+ }
       Integer path=pointer.getPointer();    
   try {
                 
-                vstup= new ObjectInputStream(new BufferedInputStream(new FileInputStream(path.toString())));
+                vstup1= new ObjectInputStream(new BufferedInputStream(new FileInputStream(path.toString())));
             } catch (IOException ex) {
                 Logger.getLogger(IO.class.getName()).log(Level.SEVERE, null, ex);
             }
         finally{
-        if(vstup==null){Actual= new Mounth(path, 88);return;}
+        if(vstup1==null){Actual= new Mounth(path, 88);vstup1.close();return;}
         Actual=(Mounth) vstup.readObject();
-        vstup.close();}
+        vstup1.close();}
     }
     
  public void  zapsat() throws IOException{
