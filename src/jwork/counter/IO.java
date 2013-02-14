@@ -7,6 +7,7 @@ package jwork.counter;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,43 +23,47 @@ public class IO {
     Pointer pointer;
     Mounth Actual;
  static private  String pointerName = "point";
-    
-    public IO() throws IOException, ClassNotFoundException {
-  ObjectInputStream vstup = null;
-   ObjectInputStream vstup1 = null;
-   
-  
-  try{
-      vstup= new ObjectInputStream(new BufferedInputStream(new FileInputStream(pointerName)));
-  pointer=(Pointer)vstup.readObject();
-  vstup.close(); }
-  
-  finally{
-     if(pointer==null){ pointer= new Pointer();   }
- 
-  
- }
-      Integer path=pointer.getPointer();    
-  try {
-                
-                vstup1= new ObjectInputStream(new BufferedInputStream(new FileInputStream(path.toString())));
+
+    public IO() {
+        try {
+            try {
+                this.pointer = ioPointer();
             } catch (IOException ex) {
                 Logger.getLogger(IO.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(IO.class.getName()).log(Level.SEVERE, null, ex);
             }
-        finally{
-        if(vstup1==null){Actual= new Mounth(path, 88);vstup1.close();return;}
-        Actual=(Mounth) vstup.readObject();
-        vstup1.close();}
+        this.Actual=ioMounth();
+        } catch (IOException ex) {
+            Logger.getLogger(IO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(IO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
     }
     
- public void  zapsat() throws IOException{
-     Integer path=pointer.getPointer();
-     ObjectOutputStream vystup=new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(pointerName)));
-vystup.writeObject(pointer);
-vystup.close();
+    
+    private Pointer ioPointer() throws IOException, ClassNotFoundException {
+        ObjectInputStream vstup = null;
+        try{
+        vstup= new ObjectInputStream(new BufferedInputStream(new FileInputStream(pointerName)));}
+        finally{
+        if(vstup==null){ vstup.close();return new Pointer();}
+         vstup.close();
+     return (Pointer) vstup.readObject();
+        }
+        
+   }
+private Mounth ioMounth() throws IOException, ClassNotFoundException {
+        ObjectInputStream vstup = null;
+        try{
+        vstup= new ObjectInputStream(new BufferedInputStream(new FileInputStream(pointer.toString())));}
+        finally{
+        if(vstup==null){ vstup.close();return new Mounth(1, 88);}
+         vstup.close();
+     return (Mounth) vstup.readObject();
+        }
+    }
 
-vystup=new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(path.toString())));
-vystup.writeObject(Actual);
-vystup.close();}
- 
+
 }

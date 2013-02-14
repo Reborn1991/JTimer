@@ -25,6 +25,11 @@ public class Pointer implements Serializable{
     public int getPointer() {
         return pointer;
     }
+    @Override
+    public String toString(){
+   Integer r=     pointer;
+   return r.toString();
+}
   void shift()  {
   pointer++;
   }
