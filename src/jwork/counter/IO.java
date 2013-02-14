@@ -48,7 +48,7 @@ public class IO {
         try{
         vstup= new ObjectInputStream(new BufferedInputStream(new FileInputStream(pointerName)));}
         finally{
-        if(vstup==null){ vstup.close();return new Pointer();}
+        if(vstup==null){ return new Pointer();}
          vstup.close();
      return (Pointer) vstup.readObject();
         }
@@ -59,11 +59,57 @@ private Mounth ioMounth() throws IOException, ClassNotFoundException {
         try{
         vstup= new ObjectInputStream(new BufferedInputStream(new FileInputStream(pointer.toString())));}
         finally{
-        if(vstup==null){ vstup.close();return new Mounth(1, 88);}
+        if(vstup==null){ return new Mounth(1, 88);}
          vstup.close();
      return (Mounth) vstup.readObject();
         }
     }
+public void save(){
+savePointer();
+saveMounth();}
 
+private void savePointer(){
+    ObjectOutputStream vystup = null;
 
+        try{
+        vystup= new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(pointerName)));
+        vystup.writeObject(pointer);}
+        catch (IOException ex) {        
+            Logger.getLogger(IO.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        finally{
+        try {
+            vystup.close();
+        } catch (IOException ex) {
+            Logger.getLogger(IO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+        }
+
+}
+private void saveMounth(){
+    ObjectOutputStream vystup = null;
+
+        try{
+        vystup= new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(Actual.toString())));
+        vystup.writeObject(Actual);}
+        catch (IOException ex) {        
+            Logger.getLogger(IO.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        finally{
+        try {
+            vystup.close();
+        } catch (IOException ex) {
+            Logger.getLogger(IO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+        }
+
+}
+public void newMounth(){
+save();
+pointer.shift();
+Actual=new Mounth(pointer.getPointer(),88);
+save();
+}
 }

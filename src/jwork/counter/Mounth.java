@@ -22,7 +22,10 @@ public class Mounth implements Serializable{
 
     double prescas(){
     return pozadovanyCas-odpracovanyCas;}
-
+public String toString(){
+Integer p=Kolikátý;
+return p.toString();
+}
     public double getOdpracovanyCas() {
         return odpracovanyCas;
     }
