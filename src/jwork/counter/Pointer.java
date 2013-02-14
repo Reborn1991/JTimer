@@ -15,7 +15,7 @@ public class Pointer implements Serializable{
    private int pointer;
 
     public Pointer() {
-        this.pointer = 0;
+        this.pointer = 1;
     }
 
     public Pointer( Pointer p) {

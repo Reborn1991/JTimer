@@ -27,13 +27,13 @@ public class IO {
     public IO() {
         try {
             try {
-                this.pointer = ioPointer();
+                ioPointer();
             } catch (IOException ex) {
                 Logger.getLogger(IO.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(IO.class.getName()).log(Level.SEVERE, null, ex);
             }
-        this.Actual=ioMounth();
+        ioMounth();
         } catch (IOException ex) {
             Logger.getLogger(IO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -43,25 +43,27 @@ public class IO {
     }
     
     
-    private Pointer ioPointer() throws IOException, ClassNotFoundException {
+    private void ioPointer() throws IOException, ClassNotFoundException {
         ObjectInputStream vstup = null;
         try{
         vstup= new ObjectInputStream(new BufferedInputStream(new FileInputStream(pointerName)));}
         finally{
-        if(vstup==null){ return new Pointer();}
-         vstup.close();
-     return (Pointer) vstup.readObject();
+        if(vstup==null){ pointer=new Pointer();return;}
+       
+    pointer=(Pointer) vstup.readObject();
+    vstup.close();
         }
         
    }
-private Mounth ioMounth() throws IOException, ClassNotFoundException {
+private void ioMounth() throws IOException, ClassNotFoundException {
         ObjectInputStream vstup = null;
         try{
         vstup= new ObjectInputStream(new BufferedInputStream(new FileInputStream(pointer.toString())));}
         finally{
-        if(vstup==null){ return new Mounth(1, 88);}
-         vstup.close();
-     return (Mounth) vstup.readObject();
+        if(vstup==null){ Actual= new Mounth(1, 88); return;}
+         
+     Actual= (Mounth) vstup.readObject();
+     vstup.close();
         }
     }
 public void save(){

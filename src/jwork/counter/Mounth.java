@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class Mounth implements Serializable{
     final int Kolikátý;
-    private double odpracovanyCas;
+    private long odpracovanyCas;
     private final double pozadovanyCas;
 
     public Mounth(int Kolikátý, double pozadovanyCas) {
@@ -26,8 +26,12 @@ public String toString(){
 Integer p=Kolikátý;
 return p.toString();
 }
-    public double getOdpracovanyCas() {
+    public long getOdpracovanyCas() {
         return odpracovanyCas;
+    }
+
+    public void setOdpracovanyCas(long odpracovanyCas) {
+        this.odpracovanyCas = odpracovanyCas;
     }
     
     

@@ -4,8 +4,8 @@
  */
 package jwork.counter;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import javax.swing.Timer;
+
 
     
 /**
@@ -14,18 +14,13 @@ import java.util.TimerTask;
  */
 public class Cloock{
    private Timer stopwatch;
-   private TimerTask jobTime;
+  
    
 
-    public Cloock() {
-    this.stopwatch = new Timer();
-    jobTime=new TimerTask() {
-
-            @Override
-            public void run() {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        };
+    public Cloock(Mounth a) {
+    this.stopwatch = new Timer(1000, null);
+ 
+        
         }
 
    
