@@ -8,98 +8,120 @@ package jwork.counter;
  *
  * @author Honza
  */
-
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.text.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class ElapsedTime extends JFrame
-{
-JLabel time;
+public class ElapsedTime extends JFrame {
 
-long startTime = System.currentTimeMillis();
-final long worktime;
-IO a;
-ElapsedTime(IO a)
-{
-    this.a=a;
-    worktime=a.Actual.getOdpracovanyCas()*1000;
-setSize(380,200);
-setLocation(100,100);
-setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    JLabel time;
+    long startTime ;
+    long worktime;
+    IO a;
+ Thread th = null;
+    ElapsedTime(IO a) {
+        this.a = a;
+        
+        setSize(380, 200);
+        setLocation(100, 100);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-setLayout(new GridBagLayout());
+        setLayout(new GridBagLayout());
 
-time = new JLabel("");
+        time = new JLabel("");
 
-time.setFont(new Font("SansSerif",Font.BOLD, 36));
+        time.setFont(new Font("SansSerif", Font.BOLD, 36));
 
-time.setForeground(Color.MAGENTA);
+        time.setForeground(Color.MAGENTA);
 
-add(time);
+        add(time);
 
 //starting new Thread which will update time
-new Thread(new Runnable()
-{
-public void run() 
-{ try 
-{
-updateTime(); 
-} 
-catch (Exception ie) 
-{ }
-}
-}).start();
-}
+//new Thread(new Runnable()
+//{
+//public void run() 
+//{ try 
+//{
+//updateTime(); 
+//} 
+//catch (Exception ie) 
+//{ }
+//}
+//}).start();
+    }
 
+    void stop() {
+ 
+        System.out.println("using thread:" + th.getId());
+        if (th.isAlive()) {
+           
+            th.interrupt();
+          
+        }
+    }
    
 
-public void updateTime()
-{
-try
-{
-while(true)
-{
+    void start() {
+       worktime = a.Actual.getOdpracovanyCas()*1000; 
+startTime= System.currentTimeMillis();
+        this.th = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    updateTime(true);
+                } catch (Exception ie) {
+                }
+            }
+        });
+
+        //Start the thred
+        this.th.start();
+
+        //thread
+    }
+
+    public void updateTime(Boolean a) {
+        try {
+            while (a) {
 //geting Time in desire format
-time.setText(getTimeElapsed());
+                time.setText(getTimeElapsed());
 
 //Thread sleeping for 1 sec
-Thread.currentThread().sleep(1000);
-}
-}
-catch (Exception e)
-{
-System.out.println("Exception in Thread Sleep : "+e);
-}
-}
+                Thread.currentThread().sleep(1000);
+            }
+        } catch (Exception e) {
+            System.out.println("Exception in Thread Sleep : " + e);
+        }
+    }
 
-public String getTimeElapsed()
-{
-long elapsedTime = System.currentTimeMillis() - startTime +worktime;
-a.Actual.setOdpracovanyCas(elapsedTime/1000);
-a.save();
-    System.out.println(a.Actual.getOdpracovanyCas());
-    
-elapsedTime = elapsedTime / 1000;
+    public String getTimeElapsed() {
+        long elapsedTime = System.currentTimeMillis() - startTime + worktime;
+        a.Actual.setOdpracovanyCas(elapsedTime / 1000);
+        a.save();
+        System.out.println(a.Actual.getOdpracovanyCas());
 
-String seconds = Integer.toString((int)(elapsedTime % 60));
-String minutes = Integer.toString((int)((elapsedTime % 3600) / 60));
-String hours = Integer.toString((int)(elapsedTime / 3600));
+        elapsedTime = elapsedTime / 1000;
+
+        String seconds = Integer.toString((int) (elapsedTime % 60));
+        String minutes = Integer.toString((int) ((elapsedTime % 3600) / 60));
+        String hours = Integer.toString((int) (elapsedTime / 3600));
 
 
-if (seconds.length() < 2)
-seconds = "0" + seconds;
+        if (seconds.length() < 2) {
+            seconds = "0" + seconds;
+        }
 
-if (minutes.length() < 2)
-minutes = "0" + minutes;
+        if (minutes.length() < 2) {
+            minutes = "0" + minutes;
+        }
 
-if (hours.length() < 2)
-hours = "0" + hours;
-
-
-return minutes+":"+seconds;
-}
+        if (hours.length() < 2) {
+            hours = "0" + hours;
+        }
 
 
+        return minutes + ":" + seconds;
+    }
 }

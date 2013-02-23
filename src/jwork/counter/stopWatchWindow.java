@@ -9,13 +9,14 @@ package jwork.counter;
  * @author Honza
  */
 public class stopWatchWindow extends javax.swing.JFrame {
-IO a;
+
+ElapsedTime t;
     /**
      * Creates new form stopWatchWindow
      */
   
     public stopWatchWindow(IO a) {
-        this.a=a;
+        t=new ElapsedTime(a);
          initComponents();
         
     }
@@ -32,7 +33,7 @@ IO a;
         Start = new javax.swing.JButton();
         Stop = new javax.swing.JButton();
         newMounth = new javax.swing.JButton();
-        jLabel1 = new ElapsedTime(a).time;
+        jLabel1 = t.time;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,6 +45,11 @@ IO a;
         });
 
         Stop.setText("Stop");
+        Stop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StopActionPerformed(evt);
+            }
+        });
 
         newMounth.setText("New Mounth");
         newMounth.addActionListener(new java.awt.event.ActionListener() {
@@ -88,12 +94,19 @@ IO a;
     }// </editor-fold>//GEN-END:initComponents
 
     private void StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartActionPerformed
+
         // TODO add your handling code here:
+        t.start();
     }//GEN-LAST:event_StartActionPerformed
 
     private void newMounthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMounthActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_newMounthActionPerformed
+
+    private void StopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopActionPerformed
+        // TODO add your handling code here:
+        t.stop();
+    }//GEN-LAST:event_StopActionPerformed
 
     /**
      * @param args the command line arguments

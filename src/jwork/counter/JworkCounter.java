@@ -18,6 +18,7 @@ public class JworkCounter {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
   final IO a= new IO();
+  final stopWatchWindow b= new stopWatchWindow(a);
 //        System.out.println(a.pointer);
 //  
 //        System.out.println(a.Actual.getOdpracovanyCas());
@@ -27,10 +28,12 @@ public class JworkCounter {
 //        System.out.println(a.Actual.getOdpracovanyCas());
 //        System.out.println(obj.startTime);
         // TODO code application logic here
-  
+//b.t.start();
+//// b.t.stop();
    java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new stopWatchWindow(a).setVisible(true);
+              
+            b.setVisible(true);
             }
    }
     );}

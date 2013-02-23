@@ -19,6 +19,11 @@ public class Mounth implements Serializable{
         this.Kolikátý = Kolikátý;
         this.pozadovanyCas = pozadovanyCas;
     }
+//    public Mounth(){
+//    Kolikátý=0;
+//    odpracovanyCas=0;
+//    pozadovanyCas=0;
+//    }
 
     double prescas(){
     return pozadovanyCas-odpracovanyCas;}

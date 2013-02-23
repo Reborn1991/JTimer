@@ -71,6 +71,9 @@
           <Connection code="&quot;Stop&quot;" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="StopActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="newMounth">
       <Properties>
@@ -89,7 +92,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ElapsedTime(a).time"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="t.time"/>
       </AuxValues>
     </Component>
   </SubComponents>
